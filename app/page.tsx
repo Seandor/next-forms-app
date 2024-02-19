@@ -8,6 +8,10 @@ let sql = postgres(process.env.DATABASE_URL || process.env.POSTGRES_URL!, {
 });
 
 export default async function Home() {
+  await sql`CREATE TABLE IF NOT EXISTS todos (
+    id SERIAL PRIMARY KEY,
+    text TEXT NOT NULL
+  );`;
   let todos = await sql`SELECT * FROM todos`;
 
   return (
